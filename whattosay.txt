@@ -1,0 +1,36 @@
+
+Ktor er et applikasjonsrammeverk for kotlin som lages av Jetbrains. De sikter på at det skal være multiplattform,
+asynkront, lettvekt og utvidbart. I dag skal vi se på generering av OpenAPI-dokumentasjon.
+
+OpenAPI, tidligere kalt Swagger, er et beskrivelsesspråk for REST-grensesnitt. Typisk skriver man enten koden for
+REST-grensesnittet først og genererer OpenAPI-dokumentasjon ut fra det, eller man skriver dokumentasjonen først og
+genererer kode. Begge deler har sine utfordringer, ikke minst at man må finne et godt verktøy for å gjøre genereringa.
+Slike verktøy finnes ofte for de aller mest brukte og etablerte rammeverkene og språkene, men for mer moderne
+språk og biblioteker er det ofte vanskeligere å finne noe bra.
+
+Hvorvidt man bør skrive kode først eller dokumentasjon først er en filosofidiskusjon. Jeg er av den mening at kode-først
+stort sett er bedre, i hvertfall i systemer der APIene kun skal brukes av et lite antall aktører. Dokumentasjon-først
+gjør ofte at utviklere må håndtere dårlig generert kode, som senker vedlikeholdbarheten til systemet. Men hvis det er
+helt åpen APIer som skal brukes av hundrevis av aktører, så kan det ha noe for seg for å sikre at dokumentasjonen er
+best mulig - med andre ord, hvis dokumentasjon er viktigere enn kodekvalitet, skriv gjerne dokumentasjon først.
+
+Men: Aller viktigst er det å bruke de beste tilgjengelige verktøyene for koblingen mellom Swagger og kode. Hvis det i
+ditt rammeverk er mye bedre verktøy tilgjengelig den ene enn den andre veien... gå den veien verktøyene vil.
+
+Prosjektene openapi-generator og Swagger Codegen er ofte stedet å starte for god tooling, spesielt om du vil generere
+kode fra OpenAPI-dokumentasjonen. Det finnes server-targets for Ktor i begge disse - men utprøving i mai-juni 2020 på
+Origo Booking-prosjektet ga oss ikke kode vi hadde noe som helst ønske om å jobbe videre med. Det kan ha blitt bedre
+siden da, ting beveger seg fort i Ktor-verdenen, så det kan være verdt en titt om du skal begynne å bruke Ktor og ønsker
+deg kodegenerering fra dokumentasjonen. Men i dag skal vi snakke om hva vi endte opp med å bruke i Origo Booking.
+
+Papsign's Ktor-OpenAPI-Generator (https://github.com/papsign/Ktor-OpenAPI-Generator) er et opensource-bibliotek som
+wrapper Ktor for å gi deg generert OpenAPI-dokumentasjon og innebygget hosting av Swagger-UI - GUI'et som presenterer
+OpenAPI-dokumentasjon og lar deg gjøre kall mot endepunktene dine.
+
+Prosjektet er i beta, og mens det er jevnlig aktivitet så er det ikke veldig mange contributors. Syntaksen du må bruke
+er ok - men langt fra optimal. Det er bugs. Dokumentasjonen er dårlig. Og skal du implementere f.eks. autentisering kan
+det være du må hoppe igjennom en del ringer. I booking-prosjektet har vi likevel landet på at det leverer veldig mye
+verdi i forhold til innsatsen som skal til for å bruke det.
+
+Så - la oss se på litt kode.
+
