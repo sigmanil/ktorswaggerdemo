@@ -45,7 +45,7 @@ dependencies {
     val ktor_version = "1.5.3"
 
     //KTor
-    implementation("io.ktor:ktor-server-tomcat:$ktor_version")
+    implementation("io.ktor:ktor-server-netty:$ktor_version")
     implementation("io.ktor:ktor-locations:$ktor_version")
     implementation("io.ktor:ktor-gson:$ktor_version")
     implementation("io.ktor:ktor-client-cio:$ktor_version")

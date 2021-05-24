@@ -8,15 +8,27 @@ import com.papsign.ktor.openapigen.openAPIGen
 import com.papsign.ktor.openapigen.route.path.normal.get
 import com.papsign.ktor.openapigen.route.response.respond
 import com.papsign.ktor.openapigen.route.apiRouting
+import com.papsign.ktor.openapigen.route.info
 import com.papsign.ktor.openapigen.route.route
+import com.papsign.ktor.openapigen.route.status
 import com.papsign.ktor.openapigen.schema.namer.DefaultSchemaNamer
 import com.papsign.ktor.openapigen.schema.namer.SchemaNamer
 import io.ktor.application.*
 import io.ktor.features.*
+import io.ktor.http.*
 import io.ktor.jackson.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import io.ktor.server.engine.*
+import io.ktor.server.netty.*
 import kotlin.reflect.KType
+
+fun main() {
+    embeddedServer(Netty, port = 9001) {
+        helloWorldWithoutOpenApi()
+        helloWorldWithOpenApi()
+    }.start(wait = true)
+}
 
 fun Application.helloWorldWithoutOpenApi() {
     routing {
@@ -52,7 +64,13 @@ fun Application.helloWorldWithOpenApi() {
     //KtorOpenApiGen routing and endpoint definition
     apiRouting {
         route("/openapi") {
-            get<HelloParams, String> { (name) ->
+            get<HelloParams, String>(
+                status(HttpStatusCode.OK),
+                info(
+                    "Hello world endpoint",
+                    "This endpoint responds with a friendly greeting using the provided name."
+                )
+            ) { (name) ->
                 respond("Hello, $name!")
             }
         }
@@ -65,7 +83,6 @@ data class HelloParams(
     @PathParam("The name which will be used in the hello-response.")
     val name: String
 )
-
 
 
 
