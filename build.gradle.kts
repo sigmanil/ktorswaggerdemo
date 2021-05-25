@@ -52,6 +52,7 @@ dependencies {
     implementation("io.ktor:ktor-client-gson:$ktor_version")
     implementation("io.ktor:ktor-serialization:$ktor_version")
     implementation("io.ktor:ktor-jackson:$ktor_version")
+    implementation("io.ktor:ktor-auth:$ktor_version")
     testImplementation("io.ktor:ktor-server-test-host:$ktor_version")
 
     //Note: 2.10.2 is the relevant jackson-version as of ktor-jackson 1.5.2. Keep an eye on this when upgrading ktor.

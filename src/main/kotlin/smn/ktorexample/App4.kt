@@ -1,21 +1,11 @@
 package smn.ktorexample
 
-
-import com.fasterxml.jackson.core.JsonProcessingException
-import com.fasterxml.jackson.databind.SerializationFeature
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
-import com.papsign.ktor.openapigen.OpenAPIGen
-import com.papsign.ktor.openapigen.interop.withAPI
 import com.papsign.ktor.openapigen.route.apiRouting
 import com.papsign.ktor.openapigen.route.path.normal.NormalOpenAPIRoute
 import com.papsign.ktor.openapigen.route.route
 import com.papsign.ktor.openapigen.route.throws
 import io.ktor.application.*
-import io.ktor.features.*
 import io.ktor.http.*
-import io.ktor.jackson.*
-import io.ktor.response.*
-import io.ktor.routing.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import kotlin.NoSuchElementException

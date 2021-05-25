@@ -42,8 +42,6 @@ fun Application.helloWorldWithoutOpenApi() {
 }
 
 
-
-
 fun Application.helloWorldWithOpenApi() {
     //This is normal/pure ktor - just tell ktor to use jackson for json-stuff.
     install(ContentNegotiation) {

@@ -96,7 +96,9 @@ fun NormalOpenAPIRoute.setupCarCreation() {
         info(
             "Car data creation",
             "This endpoints lets you insert a new car into the database. An ID will be generated for you."
-        )
+        ),
+        exampleRequest = exampleCarCreationDto,
+        exampleResponse = exampleCar
     ) { _, carToCreate ->
         val id = UUID.randomUUID().toString()
         val car = CarRegistry.insertOrUpdateCar(carToCreate.toCarWithId(id))
@@ -123,6 +125,8 @@ data class CarCreationDto(
     }
 }
 
+val exampleCarCreationDto = CarCreationDto(Color.WHITE, LocalDate.of(1968, 12,24), "Herbie, the Love Bug")
+val exampleCar = exampleCarCreationDto.toCarWithId(java.util.UUID.randomUUID().toString())
 
 
 
@@ -135,7 +139,8 @@ fun NormalOpenAPIRoute.setupSingleCarRetrieval() {
         info(
             "Car retrieval by id",
             "This endpoint responds with a representation of the car given the id."
-        )
+        ),
+        example = exampleCar
     ) { (id) ->
         val car = CarRegistry.retrieveCarById(id) ?: throw NoSuchElementException("Car with id $id not found.")
         respond(car)
@@ -160,7 +165,8 @@ fun NormalOpenAPIRoute.setupMultiCarRetrieval() {
         info(
             "Car retrieval",
             "This endpoint responds with a representation of all the cars in the database, unless one or more colors are specified, in which case only cars with the given colors are listed."
-        )
+        ),
+        example = listOf(exampleCar, Car(UUID.randomUUID().toString(), Color.BLACK, LocalDate.of(1984,1,1), "Pelle Politibil"))
     ) { (colors) ->
         val allCars = CarRegistry.retrieveAllCars()
 
@@ -192,7 +198,9 @@ fun NormalOpenAPIRoute.setupCarUpdating() {
         info(
             "Car data update",
             "This endpoints lets you update what is stored about a car. The entire car object is updated according to input data, left out fields will be deleted."
-        )
+        ),
+        exampleRequest = exampleCarCreationDto,
+        exampleResponse = exampleCar
     ) { (id), updatedCar ->
 
         if (!CarRegistry.doesCarExist(id)) {
